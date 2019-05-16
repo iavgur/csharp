@@ -9,15 +9,43 @@ namespace addressbook_web_tests
 {
     public class ContactHelper : HelperBase
 {
-        public ContactHelper(IWebDriver driver) : base(driver)
+        public ContactHelper(ApplicationManager manager) : base(manager)
         { }
-
-        public void InitContactCreation()
+        
+        public ContactHelper Create(ContactData contact)
         {
-            driver.FindElement(By.LinkText("add new")).Click();
+            InitContactCreation();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            ReturnOnHomePage();
+            return this;
         }
 
-        public void FillContactForm(ContactData contact)
+        public ContactHelper Modify(int v, ContactData newData)
+        {
+            SelectContact(v);
+            InitContactModification();
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnOnHomePage();
+            return this;
+        }
+
+        public ContactHelper Remove(int v)
+        {
+            SelectContact(v);
+            RemoveContact();
+            ReturnOnHomePage();
+            return this;
+        }
+               
+        public ContactHelper InitContactCreation()
+        {
+            driver.FindElement(By.LinkText("add new")).Click();
+            return this;
+        }
+                
+        public ContactHelper FillContactForm(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
@@ -25,16 +53,44 @@ namespace addressbook_web_tests
             driver.FindElement(By.Name("lastname")).Click();
             driver.FindElement(By.Name("lastname")).Clear();
             driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
+            return this;
         }
 
-        public void SubmitContactCreation()
+        public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            return this;
         }
 
-        public void ReturnOnHomePage()
+        public ContactHelper ReturnOnHomePage()
         {
             driver.FindElement(By.LinkText("home")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            return this;
         }
     }
 }
