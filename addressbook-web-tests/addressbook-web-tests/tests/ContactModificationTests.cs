@@ -14,7 +14,7 @@ namespace addressbook_web_tests
             ContactData newData = new ContactData("Sergey");
             newData.Lastname = "Andreev";
             
-            app.Contact.Modify(1, newData);
+            app.Contact.Modify(newData);
         }
     }
 }

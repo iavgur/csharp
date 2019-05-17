@@ -21,10 +21,9 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper Modify(int v, ContactData newData)
+        public ContactHelper Modify(ContactData newData)
         {
-            SelectContact(v);
-            InitContactModification();
+            InitContactModification(1);
             FillContactForm(newData);
             SubmitContactModification();
             ReturnOnHomePage();
@@ -80,9 +79,9 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper InitContactModification()
+        public ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
             return this;
         }
 
