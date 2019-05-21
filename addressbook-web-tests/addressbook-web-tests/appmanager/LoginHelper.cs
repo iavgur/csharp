@@ -16,7 +16,7 @@ namespace addressbook_web_tests
         public void Login(AccountData account)
         {
             Type(By.Name("user"), account.Username);
-            Type(By.Name("password"), account.Password);
+            Type(By.Name("pass"), account.Password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
 
