@@ -12,9 +12,9 @@ namespace addressbook_web_tests
               
         
         [SetUp]
-        public void SetupTest()
+        public void SetupApplicationManager()
         {
-            app = ApplicationManager.GetInstance();                       
+            app = ApplicationManager.GetInstance();
         }
     }
 }
