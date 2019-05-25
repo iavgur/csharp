@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -26,13 +27,14 @@ namespace addressbook_web_tests
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook/";
+
             loginHelper = new LoginHelper(this);
             navigator = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);            
         }
 
-        ~ApplicationManager()
+         ~ApplicationManager()
         {
             try
             {
@@ -46,7 +48,7 @@ namespace addressbook_web_tests
 
         public static ApplicationManager GetInstance()
         {
-            if (! app.IsValueCreated)
+            if (!app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
                 newInstance.Navigator.OpenHomePage();

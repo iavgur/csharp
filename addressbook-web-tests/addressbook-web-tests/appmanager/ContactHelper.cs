@@ -23,15 +23,18 @@ namespace addressbook_web_tests
 
         public ContactHelper Modify(ContactData newData)
         {
+            ContactExists();
             InitContactModification(1);
             FillContactForm(newData);
             SubmitContactModification();
             ReturnOnHomePage();
+
             return this;
         }
 
         public ContactHelper Remove(int v)
         {
+            ContactExists();
             SelectContact(v);
             RemoveContact();
             ReturnOnHomePage();
@@ -85,6 +88,17 @@ namespace addressbook_web_tests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper ContactExists()
+        {
+            if (!IsElementPresent(By.XPath("(//img[@alt='Edit'])")))
+            {
+                ContactData contact = new ContactData("Vladimir");
+                contact.Lastname = "Geyer";
+                Create(contact);
+            }
             return this;
         }
     }
