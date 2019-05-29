@@ -15,6 +15,7 @@ namespace addressbook_web_tests
             newData.Header = null;
             newData.Footer = null;
 
+            app.Group.GroupExists();
             app.Group.Modify(1, newData);
         }
     }

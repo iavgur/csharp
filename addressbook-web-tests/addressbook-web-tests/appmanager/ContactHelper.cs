@@ -17,27 +17,25 @@ namespace addressbook_web_tests
             InitContactCreation();
             FillContactForm(contact);
             SubmitContactCreation();
-            ReturnOnHomePage();
+            manager.Navigator.OpenHomePage();
             return this;
         }
 
         public ContactHelper Modify(ContactData newData)
         {
-            ContactExists();
             InitContactModification(1);
             FillContactForm(newData);
             SubmitContactModification();
-            ReturnOnHomePage();
+            manager.Navigator.OpenHomePage();
 
             return this;
         }
 
         public ContactHelper Remove(int v)
         {
-            ContactExists();
             SelectContact(v);
             RemoveContact();
-            ReturnOnHomePage();
+            manager.Navigator.OpenHomePage();
             return this;
         }
                

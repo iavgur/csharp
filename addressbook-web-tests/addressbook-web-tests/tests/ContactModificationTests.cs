@@ -13,7 +13,8 @@ namespace addressbook_web_tests
         {
             ContactData newData = new ContactData("Sergey");
             newData.Lastname = "Andreev";
-            
+
+            app.Contact.ContactExists();
             app.Contact.Modify(newData);
         }
     }
