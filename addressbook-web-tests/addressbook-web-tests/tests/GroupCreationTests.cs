@@ -17,11 +17,15 @@ namespace addressbook_web_tests
             group.Header = "sss";
             group.Footer = "ddd";
 
-            List<GroupData> oldGroups = app.Group.GetGroupLIst();
+            List<GroupData> oldGroups = app.Group.GetGroupList();
+
             app.Group.Create(group);
 
-            List<GroupData> newGroups = app.Group.GetGroupLIst();
-            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+            List<GroupData> newGroups = app.Group.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
         [Test]
@@ -31,11 +35,14 @@ namespace addressbook_web_tests
             group.Header = "";
             group.Footer = "";
 
-            List<GroupData> oldGroups = app.Group.GetGroupLIst();
+            List<GroupData> oldGroups = app.Group.GetGroupList();
             app.Group.Create(group);
 
-            List<GroupData> newGroups = app.Group.GetGroupLIst();
-            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+            List<GroupData> newGroups = app.Group.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

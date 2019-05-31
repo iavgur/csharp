@@ -22,7 +22,7 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public List<GroupData> GetGroupLIst()
+        public List<GroupData> GetGroupList()
         {
             List<GroupData> groups = new List<GroupData>();
             manager.Navigator.GoToGroupsPage();
