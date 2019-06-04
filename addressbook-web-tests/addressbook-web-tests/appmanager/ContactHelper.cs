@@ -23,7 +23,7 @@ namespace addressbook_web_tests
 
         public ContactHelper Modify(ContactData newData)
         {
-            InitContactModification(1);
+            InitContactModification(0);
             FillContactForm(newData);
             SubmitContactModification();
             manager.Navigator.OpenHomePage();
@@ -66,7 +66,7 @@ namespace addressbook_web_tests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -78,7 +78,7 @@ namespace addressbook_web_tests
 
         public ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -103,7 +103,7 @@ namespace addressbook_web_tests
         public List<ContactData> GetContactList()
         {
             List<ContactData> contacts = new List<ContactData>();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("td.center"));
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("selected[]"));
             foreach (IWebElement element in elements)
             {
                 contacts.Add(new ContactData(element.Text));
