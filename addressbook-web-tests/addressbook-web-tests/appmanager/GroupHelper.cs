@@ -22,18 +22,6 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public List<GroupData> GetGroupList()
-        {
-            List<GroupData> groups = new List<GroupData>();
-            manager.Navigator.GoToGroupsPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach (IWebElement element in elements)
-            {
-                groups.Add(new GroupData(element.Text));
-            }
-            return groups;
-        }
-
         public GroupHelper Modify(int p, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
@@ -71,6 +59,7 @@ namespace addressbook_web_tests
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            gropCache = null;
             return this;
         }
 
@@ -89,12 +78,14 @@ namespace addressbook_web_tests
         public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
+            gropCache = null;
             return this;
         }
 
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            gropCache = null;
             return this;
         }
 
@@ -116,6 +107,23 @@ namespace addressbook_web_tests
                 Create(group);
             }
             return this;
+        }
+
+        private List<GroupData> gropCache = null;
+
+        public List<GroupData> GetGroupList()
+        {
+            if (gropCache == null)
+            {
+                gropCache = new List<GroupData>();
+                manager.Navigator.GoToGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    gropCache.Add(new GroupData(element.Text));
+                }
+            }
+            return new List<GroupData>(gropCache);
         }
     }
 }
