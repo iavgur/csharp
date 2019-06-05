@@ -9,9 +9,10 @@ namespace addressbook_web_tests
         private string firstname;
         private string lastname;
 
-        public ContactData(string firstname)
+        public ContactData(string firstname, string lastname)
         {
-            this.firstname = firstname;
+            this.Firstname = firstname;
+            this.Lastname = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -38,7 +39,7 @@ namespace addressbook_web_tests
 
         public override string ToString()
         {
-            return "name=" + Lastname + " " + Firstname;
+            return "name=" + Firstname + " " + Lastname;
         }
 
         public int CompareTo(ContactData other)
@@ -47,9 +48,9 @@ namespace addressbook_web_tests
             {
                 return 1;
             }
-            if (Lastname.CompareTo(other.Lastname) == 0)
+            if (Lastname == other.Lastname)
             {
-                Firstname.CompareTo(other.Firstname);
+                return Firstname.CompareTo(other.Firstname);
             }
             return Lastname.CompareTo(other.Lastname);
         }

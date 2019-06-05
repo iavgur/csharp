@@ -93,8 +93,7 @@ namespace addressbook_web_tests
         {
             if (!IsElementPresent(By.XPath("(//img[@alt='Edit'])")))
             {
-                ContactData contact = new ContactData("Vladimir");
-                contact.Lastname = "Geyer";
+                ContactData contact = new ContactData("Vladimir", "Geyer");
                 Create(contact);
             }
             return this;
@@ -103,10 +102,11 @@ namespace addressbook_web_tests
         public List<ContactData> GetContactList()
         {
             List<ContactData> contacts = new List<ContactData>();
-            ICollection<IWebElement> elements = driver.FindElements(By.Name("selected[]"));
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name = entry]"));
             foreach (IWebElement element in elements)
             {
-                contacts.Add(new ContactData(element.Text));
+                contacts.Add(new ContactData(element.FindElement(By.XPath(".//td[3]")).Text,
+                      element.FindElement(By.XPath(".//td[2]")).Text));
             }
             return contacts;
         }
