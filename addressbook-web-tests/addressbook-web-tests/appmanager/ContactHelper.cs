@@ -113,7 +113,10 @@ namespace addressbook_web_tests
                 foreach (IWebElement element in elements)
                 {
                     contactCache.Add(new ContactData(element.FindElement(By.XPath(".//td[3]")).Text,
-                          element.FindElement(By.XPath(".//td[2]")).Text));
+                          element.FindElement(By.XPath(".//td[2]")).Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
                 }
             }
             return new List<ContactData>(contactCache);
