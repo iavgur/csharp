@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace addressbook_web_tests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
 {
         private string allPhones;
+        private string allEmails;
 
         public ContactData(string firstname, string lastname)
         {
@@ -66,6 +68,14 @@ namespace addressbook_web_tests
 
         public string WorkPhone { get; set; }
 
+        public string HomePhone2 { get; set; }
+
+        public string Email { get; set; }
+
+        public string Email2 { get; set; }
+
+        public string Email3 { get; set; }
+
         public string AllPhones
         {
             get
@@ -76,12 +86,31 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + CleanUp(HomePhone2)).Trim();
                 }
             }
             set
             {
                 allPhones = value;
+            }
+        }
+
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (CleanUp2(Email) + CleanUp2(Email2) + CleanUp2(Email3)).Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
             }
         }
 
@@ -91,7 +120,17 @@ namespace addressbook_web_tests
             {
                 return "";
             }
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(phone, "[- ()]", "") + "\r\n";
+        }
+
+        public string CleanUp2(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return Regex.Replace(email, "[ ]", "") + "\r\n";
+
         }
 
         public string Id { get; set; }
