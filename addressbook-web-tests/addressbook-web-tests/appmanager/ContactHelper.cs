@@ -8,10 +8,10 @@ using OpenQA.Selenium.Support.UI;
 namespace addressbook_web_tests
 {
     public class ContactHelper : HelperBase
-{
+    {
         public ContactHelper(ApplicationManager manager) : base(manager)
         { }
-        
+
         public ContactHelper Create(ContactData contact)
         {
             InitContactCreation();
@@ -38,13 +38,13 @@ namespace addressbook_web_tests
             manager.Navigator.OpenHomePage();
             return this;
         }
-               
+
         public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
-                
+
         public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.Firstname);
@@ -67,7 +67,7 @@ namespace addressbook_web_tests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
@@ -80,7 +80,13 @@ namespace addressbook_web_tests
 
         public ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + "]")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index + 1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper OpenDitails(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Details'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
@@ -170,6 +176,19 @@ namespace addressbook_web_tests
                 Address = address,
                 AllPhones = allPhones,
                 AllEmails = allEmails,
+            };
+        }
+
+        public ContactData GetContactInformationFromDitails(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            OpenDitails(0);
+
+            string detailsInfo = driver.FindElement(By.XPath("//div[@id='content']")).Text;
+
+            return new ContactData()
+            {
+                DetailsInfo = detailsInfo
             };
         }
     }

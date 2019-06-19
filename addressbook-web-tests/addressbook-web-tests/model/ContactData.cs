@@ -9,6 +9,7 @@ namespace addressbook_web_tests
 {
         private string allPhones;
         private string allEmails;
+        private string detailsInfo;
 
         public ContactData(string firstname, string lastname)
         {
@@ -56,9 +57,22 @@ namespace addressbook_web_tests
             return Lastname.CompareTo(other.Lastname);
         }
 
+        public ContactData()
+        {
+            //для сериализатора
+        }
+
         public string Firstname { get; set; }
         
         public string Lastname { get; set; }
+
+        public string Middlename { get; set; }
+
+        public string Nickname { get; set; }
+
+        public string Company { get; set; }
+
+        public string Title { get; set; }
 
         public string Address { get; set; }
 
@@ -68,13 +82,27 @@ namespace addressbook_web_tests
 
         public string WorkPhone { get; set; }
 
-        public string HomePhone2 { get; set; }
+        public string Fax { get; set; }
 
         public string Email { get; set; }
 
         public string Email2 { get; set; }
 
         public string Email3 { get; set; }
+
+        public string Homepage { get; set; }
+
+        public string Bday { get; set; }
+
+        public string Bmonth { get; set; }
+
+        public string Byear { get; set; }
+
+        public string Address2 { get; set; }
+
+        public string HomePhone2 { get; set; }
+
+        public string Notes { get; set; }
 
         public string AllPhones
         {
@@ -111,6 +139,35 @@ namespace addressbook_web_tests
             set
             {
                 allEmails = value;
+            }
+        }
+
+        public string DetailsInfo
+        {
+            get
+            {
+                if (detailsInfo != null)
+                {
+                    return detailsInfo;
+                }
+                else
+                {
+                    return (Firstname + " " + Middlename + " " + Lastname + "\r\n"
+                        + Nickname + "\r\n"
+                        + Title + "\r\n"
+                        + Company + "\r\n"
+                        + Address + "\r\n\r\n"
+                        + CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(HomePhone) + CleanUp(Fax) + "\r\n\r\n"
+                        + CleanUp2(Email) + CleanUp2(Email2) + CleanUp2(Email3) + "\r\n"
+                        + Homepage + "\r\n\r\n\r\n"
+                        + Address2 + "\r\n\r\n"
+                        + CleanUp(HomePhone2) + "\r\n\r\n"
+                        + Notes).Trim();
+                }
+            }
+            set
+            {
+                detailsInfo = value;
             }
         }
 
