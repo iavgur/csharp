@@ -161,6 +161,5 @@ namespace addressbook_web_tests
                 AllPhones = allPhones,
             };
         }
-
     }
 }
