@@ -102,7 +102,7 @@ namespace addressbook_web_tests
                 if (allEmails != null)
                 {
                     return allEmails;
-                }
+                } 
                 else
                 {
                     return (CleanUp2(Email) + CleanUp2(Email2) + CleanUp2(Email3)).Trim();
