@@ -8,10 +8,10 @@ using OpenQA.Selenium.Support.UI;
 namespace addressbook_web_tests
 {
     public class ContactHelper : HelperBase
-{
+    {
         public ContactHelper(ApplicationManager manager) : base(manager)
         { }
-        
+
         public ContactHelper Create(ContactData contact)
         {
             InitContactCreation();
@@ -38,13 +38,13 @@ namespace addressbook_web_tests
             manager.Navigator.OpenHomePage();
             return this;
         }
-               
+
         public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
-                
+
         public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.Firstname);
@@ -67,7 +67,7 @@ namespace addressbook_web_tests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
@@ -80,7 +80,13 @@ namespace addressbook_web_tests
 
         public ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + "]")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index + 1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper OpenDitails(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Details'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
@@ -120,46 +126,6 @@ namespace addressbook_web_tests
                 }
             }
             return new List<ContactData>(contactCache);
-        }
-
-        public ContactData GetContactInformationFromEditForm(int index)
-        {
-            manager.Navigator.OpenHomePage();
-            InitContactModification(0);
-
-            string firstname = driver.FindElement(By.Name("firstname")).GetAttribute("value");
-            string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
-            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
-
-            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
-            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
-            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
-
-            return new ContactData(firstname, lastname)
-            {
-                Address = address,
-                HomePhone = homePhone,
-                MobilePhone = mobilePhone,
-                WorkPhone = workPhone,
-            };
-        }
-
-        public ContactData GetContactInformationFromTable(int index)
-        {
-            manager.Navigator.OpenHomePage();
-
-            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
-                .FindElements(By.TagName("td"));
-            string lastname = cells[1].Text;
-            string firstname = cells[2].Text;
-            string address = cells[3].Text;
-            string allPhones = cells[5].Text;
-
-            return new ContactData(firstname, lastname)
-            {
-                Address = address,
-                AllPhones = allPhones,
-            };
         }
     }
 }
