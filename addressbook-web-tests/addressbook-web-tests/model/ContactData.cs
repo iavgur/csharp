@@ -59,7 +59,7 @@ namespace addressbook_web_tests
 
         public ContactData()
         {
-            //для сериализатора
+            
         }
 
         public string Firstname { get; set; }
@@ -114,7 +114,7 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + CleanUp(HomePhone2)).Trim();
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + CleanUp(Fax)).Trim();
                 }
             }
             set
@@ -146,23 +146,83 @@ namespace addressbook_web_tests
         {
             get
             {
-                if (detailsInfo != null)
+                if (detailsInfo != "")
                 {
                     return detailsInfo;
                 }
                 else
                 {
-                    return (Firstname + " " + Middlename + " " + Lastname + "\r\n"
-                        + Nickname + "\r\n"
-                        + Title + "\r\n"
-                        + Company + "\r\n"
-                        + Address + "\r\n\r\n"
-                        + CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(HomePhone) + CleanUp(Fax) + "\r\n\r\n"
-                        + CleanUp2(Email) + CleanUp2(Email2) + CleanUp2(Email3) + "\r\n"
-                        + Homepage + "\r\n\r\n\r\n"
-                        + Address2 + "\r\n\r\n"
-                        + CleanUp(HomePhone2) + "\r\n\r\n"
-                        + Notes).Trim();
+                    if (Firstname != "")
+                    {
+                        detailsInfo += Firstname + " ";
+                    }
+
+                    if (Middlename != "")
+                    {
+                        detailsInfo += Middlename + " ";
+                    }
+
+                    if (Lastname != "")
+                    {
+                        detailsInfo += Lastname + "\r\n";
+                    }
+
+                    if (Nickname != "")
+                    {
+                        detailsInfo += Nickname + "\r\n";
+                    }
+
+                    if (Title != "")
+                    {
+                        detailsInfo += Title + "\r\n";
+                    }
+
+                    if (Company != "")
+                    {
+                        detailsInfo += Company + "\r\n";
+                    }
+
+                    if (Address != "")
+                    {
+                        detailsInfo += Address + "\r\n\r\n";
+                    }
+
+                    if (HomePhone != "")
+                    {
+                        detailsInfo += "H: " + CleanUp(HomePhone) + "\r\n";
+                    }
+
+                    if (MobilePhone != "")
+                    {
+                        detailsInfo += "M: " + CleanUp(MobilePhone) + "\r\n";
+                    }
+
+                    if (WorkPhone != "")
+                    {
+                        detailsInfo += "M: " + CleanUp(WorkPhone) + "\r\n";
+                    }
+
+                    if (Fax != "")
+                    {
+                        detailsInfo += "F: " + CleanUp(Fax) + "\r\n\r\n";
+                    }
+
+                    if (Email != "")
+                    {
+                        detailsInfo += Email + "\r\n";
+                    }
+
+                    if (Email2 != "")
+                    {
+                        detailsInfo += Email2 + "\r\n";
+                    }
+
+                    if (Email3 != "")
+                    {
+                        detailsInfo += Email3 + "\r\n";
+                    }
+
+                    return detailsInfo.Trim();
                 }
             }
             set
@@ -171,7 +231,12 @@ namespace addressbook_web_tests
             }
         }
 
-        private string CleanUp(string phone)
+        public ContactData(string detailsinfo)
+        {
+            DetailsInfo = detailsInfo;
+        }
+
+        public string CleanUp(string phone)
         {
             if (phone == null || phone == "")
             {
