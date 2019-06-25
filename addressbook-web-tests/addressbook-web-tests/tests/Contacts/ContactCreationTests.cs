@@ -9,12 +9,20 @@ namespace addressbook_web_tests
 {
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
-    {        
-        [Test]
-        public void ContactCreationTest()
+    {
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contact = new ContactData("Vladimir", "Geyer");
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30)));
+            }
+            return contacts;
+        }
 
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactCreationTest(ContactData contact)
+        {
             List<ContactData> oldContacts = app.Contact.GetContactList();
 
             app.Contact.Create(contact);
