@@ -23,9 +23,10 @@ namespace addressbook_web_tests
         {
             int l = Convert.ToInt32(rnd.NextDouble() * max);
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < l; i++)
             {
-                builder.Append(Convert.ToChar(32 + Convert.ToInt32(rnd.NextDouble() * 65)));
+                //builder.Append(Convert.ToChar(32 + Convert.ToInt32(rnd.NextDouble() * 65)));
+                builder.Append((char)rnd.Next(28, 127) + (char)rnd.Next(21, 27));
             }
             return builder.ToString();
         }

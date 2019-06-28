@@ -195,5 +195,11 @@ namespace addressbook_web_tests
          
             return new ContactData(detailsInfo);            
         }
+
+        public int GetContactCount()
+        {
+            manager.Navigator.OpenHomePage();
+            return driver.FindElements(By.XPath(".//tr[@name='entry']")).Count;
+        }
     }
 }
