@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {  
         public static IEnumerable<GroupData> RandomGroupDataProvaider()
         {
@@ -61,11 +61,13 @@ namespace addressbook_web_tests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List<GroupData> oldGroups = app.Group.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Group.Create(group);
 
-            List<GroupData> newGroups = app.Group.GetGroupList();
+            Assert.AreEqual(oldGroups.Count + 1, app.Group.GetGropCount());
+
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
