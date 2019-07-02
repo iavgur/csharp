@@ -74,6 +74,7 @@ namespace addressbook_web_tests
             Assert.AreEqual(oldGroups, newGroups);
         }
         
+
         [Test]
 
         public void TestDBConnectivity()

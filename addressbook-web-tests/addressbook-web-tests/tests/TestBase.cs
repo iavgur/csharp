@@ -8,6 +8,8 @@ namespace addressbook_web_tests
 {
     public class TestBase
 {
+        public static bool PERFORM_LONG_UI_CHECKS = false;
+
         protected ApplicationManager app;
               
         
