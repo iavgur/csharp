@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
         [Test]
         public void ContactRemovalTest()
@@ -17,6 +17,7 @@ namespace addressbook_web_tests
             ContactData toBeRemoved = oldContacts[0];
 
             app.Contact.Remove(toBeRemoved);
+
             Assert.AreEqual(oldContacts.Count - 1, app.Contact.GetContactCount());
 
             List<ContactData> newContacts = ContactData.GetAll();

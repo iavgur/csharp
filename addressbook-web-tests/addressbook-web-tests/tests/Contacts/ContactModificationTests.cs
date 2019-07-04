@@ -6,23 +6,24 @@ using NUnit.Framework;
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         [Test]
         public void ContactModificationTest()
         {
+            int index = 0;
             ContactData newData = new ContactData("Sergey", "Andreev");
 
             app.Contact.ContactExists();
 
-            List<ContactData> oldContacts = app.Contact.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
             ContactData oldData = oldContacts[0];
 
-            app.Contact.Modify(newData);
+            app.Contact.Modify(index, newData);
 
-            List<ContactData> newContacts = app.Contact.GetContactList();
-            oldContacts[0].Lastname = newData.Lastname;
-            oldContacts[0].Firstname = newData.Firstname;
+            List<ContactData> newContacts = ContactData.GetAll();
+            oldContacts[index].Lastname = newData.Lastname;
+            oldContacts[index].Firstname = newData.Firstname;
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);

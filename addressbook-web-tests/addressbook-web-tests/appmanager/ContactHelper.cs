@@ -65,6 +65,16 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public ContactHelper Modify(int index, ContactData newData)
+        {
+            InitContactModification(index);
+            FillContactForm(newData);
+            SubmitContactModification();
+            manager.Navigator.OpenHomePage();
+
+            return this;
+        }
+
         public ContactHelper Remove(int v)
         {
             SelectContact(v);
@@ -128,7 +138,9 @@ namespace addressbook_web_tests
 
         public ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index + 1) + "]")).Click();
+            driver.FindElements(By.Name("entry"))[index]
+               .FindElements(By.TagName("td"))[7]
+               .FindElement(By.TagName("a")).Click();
             return this;
         }
 

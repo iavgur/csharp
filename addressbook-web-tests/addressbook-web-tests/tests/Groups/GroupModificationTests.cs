@@ -14,18 +14,19 @@ namespace addressbook_web_tests
             GroupData newData = new GroupData("zzz");
             newData.Header = null;
             newData.Footer = null;
+            int i = 0;
 
             app.Group.GroupExists();
 
-            List<GroupData> oldGroups = app.Group.GetGroupList();
-            GroupData oldData = oldGroups[0];
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData oldData = oldGroups[1];
 
-            app.Group.Modify(0, newData);
+            app.Group.Modify(oldData.Id, newData);
 
             Assert.AreEqual(oldGroups.Count, app.Group.GetGropCount());
 
-            List<GroupData> newGroups = app.Group.GetGroupList();
-            oldGroups[0].Name = newData.Name;
+            List<GroupData> newGroups = GroupData.GetAll();
+            oldGroups[i].Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
