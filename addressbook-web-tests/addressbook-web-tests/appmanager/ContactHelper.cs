@@ -35,19 +35,45 @@ namespace addressbook_web_tests
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
-        private void CommitAddingContactToGroup()
+        internal void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectGroupToDelete(group.Name);
+            SelectContactInGroup(contact.Id);
+            CommitDelettingContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void CommitDelettingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectContactInGroup(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+        }
+
+        private void SelectGroupToDelete(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+
+        public void CommitAddingContactToGroup()
         {
             driver.FindElement(By.Name("add")).Click();
         }
 
-        private void SelectGroupToAdd(string name)
+        public void SelectGroupToAdd(string name)
         {
             new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
         }
 
-        private void SelectContactToAdd(string contactid)
+        public void SelectContactToAdd(string contactId)
         {
-            driver.FindElement(By.Id(contactid)).Click();
+            driver.FindElement(By.Id(contactId)).Click();
         }
 
         public void ClearGroupFilter()
