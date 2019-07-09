@@ -23,7 +23,25 @@ namespace addressbook_web_tests
             return this;
         }
 
-       
+        internal void VerifyContactExistInGroup(ContactData contact, List<ContactData> oldList, GroupData group)
+        {
+            if (oldList.Count == 0)
+            {
+                AddContactToGroup(contact, group);
+            }
+        }
+
+        internal void VerifyContactBeforeAdding(List<GroupData> groupContactList)
+        {
+            List<GroupData> allGroups = GroupData.GetAll();
+
+            if (allGroups.Count.Equals(groupContactList.Count))
+            {
+                ContactData contact = new ContactData("lName", "fName");
+                Create(contact);
+            }
+        }
+
         public void AddContactToGroup(ContactData contact, GroupData group)
         {
             manager.Navigator.OpenHomePage();

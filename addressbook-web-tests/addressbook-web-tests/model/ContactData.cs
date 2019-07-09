@@ -37,6 +37,17 @@ namespace addressbook_web_tests
             return Lastname == other.Lastname;
         }
 
+        public List<GroupData> GetGroups()
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                List<GroupData> groups = (from g in db.Groups
+                     from gcr in db.GCR.Where(p => p.ContactId == Id && p.GroupId == g.Id) select g)
+                     .Distinct().ToList();
+                return groups;
+            }
+        }
+
         public override int GetHashCode()
         {
             return Lastname.GetHashCode();

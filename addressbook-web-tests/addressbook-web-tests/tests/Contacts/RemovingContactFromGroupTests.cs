@@ -18,6 +18,7 @@ namespace addressbook_web_tests
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = ContactData.GetAll().First();
+            app.Contact.VerifyContactExistInGroup(contact, oldList, group);
 
             app.Contact.RemoveContactFromGroup(contact, group);
 
